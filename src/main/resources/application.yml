@@ -1,0 +1,4 @@
+spring:
+  application.name: rango-core
+  output.ansi.enabled: ALWAYS
+  data.mongodb.uri: mongodb://root:secret@localhost:27017/rango
