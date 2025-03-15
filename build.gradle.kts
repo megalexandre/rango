@@ -63,3 +63,16 @@ kotlin {
 tasks.withType<Test> {
 	useJUnitPlatform()
 }
+
+tasks.register<Test>("cucumberTest") {
+	useJUnitPlatform {
+		includeEngines("cucumber")
+	}
+	testClassesDirs = sourceSets["test"].output.classesDirs
+	classpath = sourceSets["test"].runtimeClasspath
+	outputs.upToDateWhen { false }
+}
+
+tasks.build {
+	dependsOn(tasks.named("cucumberTest"))
+}
