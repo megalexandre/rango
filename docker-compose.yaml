@@ -1,10 +1,6 @@
-networks:
-  rango:
-    driver: bridge
-
 services:
   core:
-    container_name: core-v1
+    container_name: rango-api
     build: .
     depends_on:
       - mongodb
@@ -17,9 +13,10 @@ services:
       - SPRING_DATA_MONGODB_URI=mongodb://root:secret@mongodb:27017/rango?authSource=admin
       - SPRING_APPLICATION_NAME=rango-core
       - SPRING_OUTPUT_ANSI_ENABLED=ALWAYS
+      - MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE=health,info,prometheus
 
   mongodb:
-    container_name: db-v1
+    container_name: rango-db
     image: 'mongo:latest'
     environment:
       - 'MONGO_INITDB_DATABASE=rango'
@@ -29,3 +26,30 @@ services:
       - '27017:27017'
     networks:
       - rango
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - rango
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=senha
+    depends_on:
+      - prometheus
+    networks:
+      - rango
+
+
+networks:
+  rango:
+    driver: bridge

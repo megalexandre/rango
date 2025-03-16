@@ -4,3 +4,12 @@ spring:
   data:
     mongodb:
       uri: mongodb://root:secret@localhost:27017/rango
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  metrics:
+    tags:
+      application: spring-boot-app

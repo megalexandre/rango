@@ -32,6 +32,10 @@ dependencies {
 	testImplementation("org.junit.platform:junit-platform-suite:1.9.2")
 	testImplementation("org.junit.platform:junit-platform-suite-api:1.9.2")
 
+	//observability
+	implementation("io.micrometer:micrometer-registry-prometheus")
+	implementation("org.springframework.boot:spring-boot-starter-actuator")
+
 	//cucumber
 	testImplementation("io.cucumber:cucumber-java:7.15.0")
 	testImplementation("io.cucumber:cucumber-spring:7.15.0")
