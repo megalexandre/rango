@@ -1,0 +1,31 @@
+networks:
+  rango:
+    driver: bridge
+
+services:
+  core:
+    container_name: core-v1
+    build: .
+    depends_on:
+      - mongodb
+    ports:
+      - "8080:8080"
+    networks:
+      - rango
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_DATA_MONGODB_URI=mongodb://root:secret@mongodb:27017/rango?authSource=admin
+      - SPRING_APPLICATION_NAME=rango-core
+      - SPRING_OUTPUT_ANSI_ENABLED=ALWAYS
+
+  mongodb:
+    container_name: db-v1
+    image: 'mongo:latest'
+    environment:
+      - 'MONGO_INITDB_DATABASE=rango'
+      - 'MONGO_INITDB_ROOT_PASSWORD=secret'
+      - 'MONGO_INITDB_ROOT_USERNAME=root'
+    ports:
+      - '27017:27017'
+    networks:
+      - rango

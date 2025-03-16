@@ -1,4 +1,4 @@
-package rango.com.api.stepdefinitions
+package rango.com.api.cucumber.stepdefinitions
 
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -19,7 +19,6 @@ import rango.com.api.resources.model.ProductModel
 import java.math.BigDecimal
 import java.util.*
 import java.util.function.Consumer
-import kotlin.text.get
 
 class ProductSteps(
     val productRepositoryJpa: ProductRepositoryJpa,

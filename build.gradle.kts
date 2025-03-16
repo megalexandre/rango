@@ -8,6 +8,7 @@ plugins {
 group = "rango.com"
 version = "0.0.1-SNAPSHOT"
 
+
 java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(21)
@@ -28,6 +29,7 @@ dependencies {
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.boot:spring-boot-testcontainers")
+	testImplementation("org.junit.platform:junit-platform-suite:1.9.2")
 	testImplementation("org.junit.platform:junit-platform-suite-api:1.9.2")
 
 	//cucumber
@@ -62,17 +64,17 @@ kotlin {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+	systemProperty("cucumber.junit-platform.naming-strategy", "long")
 }
 
-tasks.register<Test>("cucumberTest") {
-	useJUnitPlatform {
-		includeEngines("cucumber")
+tasks.withType<Copy> {
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+sourceSets {
+	named("test") {
+		resources{
+			srcDir("src/test/resources")
+		}
 	}
-	testClassesDirs = sourceSets["test"].output.classesDirs
-	classpath = sourceSets["test"].runtimeClasspath
-	outputs.upToDateWhen { false }
-}
-
-tasks.build {
-	dependsOn(tasks.named("cucumberTest"))
 }

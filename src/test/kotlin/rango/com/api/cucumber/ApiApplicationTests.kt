@@ -1,4 +1,4 @@
-package rango.com.api
+package rango.com.api.cucumber
 
 import io.cucumber.spring.CucumberContextConfiguration
 import org.springframework.boot.test.context.SpringBootTest
