@@ -1,7 +1,6 @@
 services:
   core:
-    container_name: rango-api
-    build: .
+    image: alexandreqrz/rango:latest
     depends_on:
       - mongodb
     ports:
@@ -16,7 +15,6 @@ services:
       - MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE=health,info,prometheus
 
   mongodb:
-    container_name: rango-db
     image: 'mongo:latest'
     environment:
       - 'MONGO_INITDB_DATABASE=rango'
@@ -29,7 +27,6 @@ services:
 
   prometheus:
     image: prom/prometheus:latest
-    container_name: prometheus
     ports:
       - "9090:9090"
     volumes:
@@ -39,7 +36,6 @@ services:
 
   grafana:
     image: grafana/grafana:latest
-    container_name: grafana
     ports:
       - "3000:3000"
     environment:
