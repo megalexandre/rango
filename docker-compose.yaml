@@ -1,20 +1,21 @@
 services:
-  core:
+
+  api:
     image: alexandreqrz/rango:latest
     depends_on:
-      - mongodb
+      - db
     ports:
       - "8080:8080"
     networks:
       - rango
     environment:
       - SPRING_PROFILES_ACTIVE=prod
-      - SPRING_DATA_MONGODB_URI=mongodb://root:secret@mongodb:27017/rango?authSource=admin
+      - SPRING_DATA_MONGODB_URI=mongodb://root:secret@db:27017/rango?authSource=admin
       - SPRING_APPLICATION_NAME=rango-core
       - SPRING_OUTPUT_ANSI_ENABLED=ALWAYS
       - MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE=health,info,prometheus
 
-  mongodb:
+  db:
     image: 'mongo:latest'
     environment:
       - 'MONGO_INITDB_DATABASE=rango'
