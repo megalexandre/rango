@@ -1,4 +1,4 @@
-package rango.com.api.domain
+package rango.com.api.domain.entity
 
 import java.math.BigDecimal
 

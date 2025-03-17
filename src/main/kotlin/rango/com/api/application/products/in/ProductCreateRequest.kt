@@ -1,7 +1,7 @@
 package rango.com.api.application.products.`in`
 
 import rango.com.api.commons.Id
-import rango.com.api.domain.Product
+import rango.com.api.domain.entity.Product
 import java.math.BigDecimal
 
 class ProductCreateRequest (

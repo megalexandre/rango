@@ -46,7 +46,6 @@ services:
     networks:
       - rango
 
-
 networks:
   rango:
     driver: bridge

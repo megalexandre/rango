@@ -1,8 +1,16 @@
 management:
   endpoints:
-    web:
-      exposure:
-        include: health,info,prometheus
+    enabled-by-default: false
+    web.exposure.include: 'health, prometheus'
+  endpoint:
+    health:
+      enabled: true
+      show-details: always
+    prometheus:
+      enabled: true
   metrics:
     tags:
       application: spring-boot-app
+    export:
+      prometheus:
+        enabled: true

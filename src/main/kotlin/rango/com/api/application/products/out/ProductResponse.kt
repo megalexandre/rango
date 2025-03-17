@@ -1,6 +1,6 @@
 package rango.com.api.application.products.out
 
-import rango.com.api.domain.Product
+import rango.com.api.domain.entity.Product
 
 class ProductResponse (val number: String)
 

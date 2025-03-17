@@ -1,6 +1,6 @@
 package rango.com.api.domain.service
 
-import rango.com.api.domain.Product
+import rango.com.api.domain.entity.Product
 
 interface ProductService {
 

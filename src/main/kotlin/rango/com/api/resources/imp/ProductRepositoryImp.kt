@@ -1,6 +1,6 @@
 package rango.com.api.resources.imp
 
-import rango.com.api.domain.Product
+import rango.com.api.domain.entity.Product
 import rango.com.api.domain.repository.ProductRepository
 import rango.com.api.resources.jpa.ProductRepositoryJpa
 import rango.com.api.resources.map.toEntity
