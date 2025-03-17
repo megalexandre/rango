@@ -32,6 +32,10 @@ dependencies {
 	testImplementation("org.junit.platform:junit-platform-suite:1.9.2")
 	testImplementation("org.junit.platform:junit-platform-suite-api:1.9.2")
 
+	//swagger
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0")
+	implementation("org.springdoc:springdoc-openapi-ui:1.8.0")
+
 	//observability
 	implementation("io.micrometer:micrometer-registry-prometheus")
 	implementation("org.springframework.boot:spring-boot-starter-actuator")

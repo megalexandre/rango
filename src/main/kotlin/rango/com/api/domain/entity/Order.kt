@@ -1,5 +1,6 @@
 package rango.com.api.domain.entity
 
+import rango.com.api.commons.OrderStatus
 import java.time.LocalDateTime
 
 class Order(
@@ -7,5 +8,5 @@ class Order(
     val products: Collection<Product>,
     val customer: Customer,
     val createdAt: LocalDateTime,
-    val status: String
+    val status: OrderStatus
 )

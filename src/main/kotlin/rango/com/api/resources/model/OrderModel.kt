@@ -2,12 +2,10 @@ package rango.com.api.resources.model
 
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
-import rango.com.api.domain.entity.Customer
-import rango.com.api.domain.entity.Product
-import java.math.BigDecimal
+import rango.com.api.commons.OrderStatus
 import java.time.LocalDateTime
 
-@Document(collection = "Order")
+@Document(collection = "order")
 data class OrderModel(
 
     @Id
@@ -15,7 +13,7 @@ data class OrderModel(
     val products: Collection<ProductModel>,
     val customer: CustomerModel,
     val createdAt: LocalDateTime,
-    val status: String,
+    val status: OrderStatus,
 
 )
 
@@ -25,4 +23,4 @@ data class CustomerModel(
     val name: String,
     val address: String,
 
-    )
+)

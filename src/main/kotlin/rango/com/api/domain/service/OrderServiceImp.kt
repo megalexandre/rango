@@ -17,4 +17,10 @@ class OrderServiceImp(
     override fun save(order: Order) = orderRepository.save(order).also {
         orderCreated.increment()
     }
+
+    override fun retrieveOrders(): Collection<Order> {
+        return orderRepository.retrieveOrders()
+    }
+
+    override fun retrieveOrder(string: String): Order? = orderRepository.retrieveOrder(string)
 }

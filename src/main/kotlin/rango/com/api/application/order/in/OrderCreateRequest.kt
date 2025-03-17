@@ -2,6 +2,7 @@ package rango.com.api.application.order.`in`
 
 import rango.com.api.application.products.`in`.ProductCreateRequest
 import rango.com.api.commons.Id
+import rango.com.api.commons.OrderStatus
 import rango.com.api.domain.entity.Customer
 import rango.com.api.domain.entity.Order
 import java.time.LocalDateTime
@@ -16,7 +17,7 @@ class OrderCreateRequest (
         products = products.map { it.toEntity() },
         customer = customer.toEntity(),
         createdAt = LocalDateTime.now(),
-        status = "CREATED",
+        status = OrderStatus.OPEN,
     )
 
 }

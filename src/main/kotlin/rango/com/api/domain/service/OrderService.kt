@@ -5,4 +5,6 @@ import rango.com.api.domain.entity.Order
 interface OrderService {
 
     fun save(order: Order): Order
+    fun retrieveOrders(): Collection<Order>
+    fun retrieveOrder(string: String): Order?
 }
