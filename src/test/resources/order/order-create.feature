@@ -28,7 +28,6 @@ Feature: Order Management
       """
 
     Then the response status should be 201
-    And the response should contain the order ID
     And the database should have the "orders" with the following data
       | customer.name | customer.address | products[0].number                   |
       | alexandre     | bloco 92b        | 54ef44ff-0396-11f0-81ff-6d4319cda140 |

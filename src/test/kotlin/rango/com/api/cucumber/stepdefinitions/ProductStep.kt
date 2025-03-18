@@ -113,4 +113,9 @@ class ProductStep(
         assertEquals(first.price, products.first().price)
     }
 
+    @Given("the database has the following products")
+    fun theDatabaseHasTheFollowingProducts(dataTable: DataTable){
+        val products: List<ProductModel> = dataTable.asMaps().map { row -> ProductModelTransformer().productModelTransformer(row) }
+        productRepositoryJpa.saveAll(products)
+    }
 }
