@@ -32,6 +32,12 @@ dependencies {
 	testImplementation("org.junit.platform:junit-platform-suite:1.9.2")
 	testImplementation("org.junit.platform:junit-platform-suite-api:1.9.2")
 
+	// https://mvnrepository.com/artifact/org.javamoney/moneta
+	implementation("org.javamoney:moneta:1.4.4")
+
+	//serialization
+	implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
+
 	//swagger
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0")
 	implementation("org.springdoc:springdoc-openapi-ui:1.8.0")

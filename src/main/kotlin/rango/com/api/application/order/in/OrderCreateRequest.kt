@@ -5,10 +5,12 @@ import rango.com.api.commons.Id
 import rango.com.api.commons.OrderStatus
 import rango.com.api.domain.entity.Customer
 import rango.com.api.domain.entity.Order
+import rango.com.api.domain.entity.Product
+import java.math.BigDecimal
 import java.time.LocalDateTime
 
 class OrderCreateRequest (
-    val products: Collection<ProductCreateRequest>,
+    val products: Collection<ProductRequest>,
     val customer: CustomerRequest,
 ){
 
@@ -22,6 +24,19 @@ class OrderCreateRequest (
 
 }
 
+class ProductRequest(
+    val number: String,
+    val name: String,
+    val description: String,
+    val price: BigDecimal,
+){
+    fun toEntity() = Product(
+        number = number,
+        name = name,
+        description = description,
+        price = price
+    )
+}
 
 class CustomerRequest(
     val name: String,

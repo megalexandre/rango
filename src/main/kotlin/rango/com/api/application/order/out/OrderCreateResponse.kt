@@ -4,4 +4,4 @@ import rango.com.api.domain.entity.Order
 
 class OrderCreateResponse (val number: String)
 
-fun Order.toResponse() = OrderCreateResponse(this.number)
+fun Order.toCreateResponse() = OrderCreateResponse(this.number)

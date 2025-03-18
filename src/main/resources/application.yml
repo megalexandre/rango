@@ -8,3 +8,6 @@ spring:
 
   output.ansi.enabled: always
   docker.compose.file: "app-compose.yaml"
+
+  jackson:
+    time-zone: UTC

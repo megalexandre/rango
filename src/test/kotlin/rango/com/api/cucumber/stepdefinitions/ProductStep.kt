@@ -3,10 +3,12 @@ package rango.com.api.cucumber.stepdefinitions
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.cucumber.datatable.DataTable
+import io.cucumber.java.en.And
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
 import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.ResultActions
@@ -14,13 +16,12 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
+import rango.com.api.cucumber.stepdefinitions.transformer.ProductModelTransformer
 import rango.com.api.resources.jpa.ProductRepositoryJpa
 import rango.com.api.resources.model.ProductModel
-import java.math.BigDecimal
-import java.util.*
 import java.util.function.Consumer
 
-class ProductSteps(
+class ProductStep(
     val productRepositoryJpa: ProductRepositoryJpa,
     applicationContext: WebApplicationContext,
     val objectMapper: ObjectMapper,
@@ -30,9 +31,9 @@ class ProductSteps(
 
     var mockMvc: MockMvc = MockMvcBuilders.webAppContextSetup(applicationContext).build()
 
-    @Given("I have products")
+    @Given("I have the following products")
     fun iHaveProducts(dataTable: DataTable) {
-        val products: List<ProductModel> = dataTable.asMaps().map { row -> productModelTransformer(row) }
+        val products: List<ProductModel> = dataTable.asMaps().map { row -> ProductModelTransformer().productModelTransformer(row) }
         productRepositoryJpa.saveAll(products)
     }
 
@@ -48,16 +49,6 @@ class ProductSteps(
         resultActions = mockMvc.perform(
             MockMvcRequestBuilders.get(path)
                 .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-        )
-    }
-
-    @When("I send the product {string}")
-    fun iSendTheProduct(path: String, productJson: String) {
-        resultActions = mockMvc.perform(
-            MockMvcRequestBuilders.post(path)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(productJson)
                 .accept(MediaType.APPLICATION_JSON)
         )
     }
@@ -85,6 +76,16 @@ class ProductSteps(
                 })
     }
 
+    @When("I send a product to {string}")
+    fun iSendTheProduct(path: String, productJson: String) {
+        resultActions = mockMvc.perform(
+            MockMvcRequestBuilders.post(path)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(productJson)
+                .accept(MediaType.APPLICATION_JSON)
+        )
+    }
+
     @Then("I should see the keys with code {int}")
     fun iShouldSeeTheKeysWithCode(statusCode: Int, expectedResponse: String) {
         resultActions.andExpect(status().`is`(statusCode))
@@ -101,18 +102,15 @@ class ProductSteps(
             }
     }
 
-    fun productModelTransformer(row: Map<String, String>): ProductModel {
+    @And("database should have a product with the following data")
+    fun databaseShouldHaveTheProduct(dataTable: DataTable) {
+        val products: List<ProductModel> = dataTable.asMaps().map { row -> ProductModelTransformer().productModelTransformer(row) }
 
-        val number: String = row["number"] ?: UUID.randomUUID().toString()
-        val name: String = row["name"] ?: ""
-        val price: BigDecimal = row["price"]?.let { BigDecimal(it) }?: BigDecimal.ZERO
-        val description: String = row["description"] ?: ""
+        val first = productRepositoryJpa.findAll().first()
 
-        return ProductModel(
-            number = number,
-            name =name,
-            price = price,
-            description = description
-        )
+        assertEquals(first.name, products.first().name)
+        assertEquals(first.description, products.first().description)
+        assertEquals(first.price, products.first().price)
     }
+
 }

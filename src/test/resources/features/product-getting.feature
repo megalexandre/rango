@@ -2,7 +2,8 @@ Feature: Product
 
   Scenario: get all products
 
-    Given I have products
+    Given I have no products
+    Given I have the following products
       | group  | name         | price | description                                                |
       | Promos | hot dog      | 5.00  | Lorem ipsum dolor sit amet, consectetur adipiscing elit.   |
       | Promos | Misto Quente | 15.00 | Suspendisse convallis mi nulla, ut varius eros iaculis eu. |
@@ -26,4 +27,14 @@ Feature: Product
         "description": "Suspendisse convallis mi nulla, ut varius eros iaculis eu."
       }
     ]
+    """
+
+  Scenario: get all when we have no products
+
+    Given I have no products
+
+    When I fetch the product list "/products"
+    Then I should see the available products
+    """
+    []
     """

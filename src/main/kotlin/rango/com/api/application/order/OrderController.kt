@@ -6,9 +6,10 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import rango.com.api.application.order.`in`.OrderCreateRequest
 import rango.com.api.application.order.out.OrderCreateResponse
-import rango.com.api.application.order.out.toResponse
-import rango.com.api.domain.entity.Order
-import rango.com.api.domain.entity.Product
+import rango.com.api.application.order.out.OrderRetrieveResponse
+import rango.com.api.application.order.out.toCreateResponse
+import rango.com.api.application.order.out.toRetrieveResponse
+import rango.com.api.commons.OrderStatus
 import rango.com.api.domain.service.OrderService
 import java.net.URI
 import java.time.LocalDateTime
@@ -20,52 +21,26 @@ class OrderController(
 ) {
     private val log: Logger = LoggerFactory.getLogger(this::class.java)
 
-    fun list(request: OrderCreateRequest){
-        val map: Map<String, Product> = request.products
-            .map { it.toEntity() }
-            .associateBy { it.number }
-
-        map[""]
-
-        var list = ArrayList<Product>(request.products.map { it.toEntity() })
-        list.filter { it.number == "" }
-    }
-    fun map(request: OrderCreateRequest){
-        val map: Map<String, Product> = request.products
-            .map { it.toEntity() }
-            .associateBy { it.number }
-
-        map[""]
-
-        var list = ArrayList<Product>(request.products.map { it.toEntity() })
-        list.filter { it.number == "" }
-    }
-
     @PostMapping
     fun createOrder(@RequestBody request: OrderCreateRequest): ResponseEntity<OrderCreateResponse> {
-
-        val map: Map<String, Product> = request.products
-            .map { it.toEntity() }
-            .associateBy { it.number }
-
-        map[""]
-
-        var list = ArrayList<Product>(request.products.map { it.toEntity() })
-        list.filter { it.number == "" }
-
-        val response = orderService.save(request.toEntity()).toResponse()
+        val response = orderService.save(request.toEntity()).toCreateResponse()
         return ResponseEntity.created(URI.create("/orders")).body(response)
     }
 
     @GetMapping
-    fun retrieveOrders(): Collection<Order> = orderService.retrieveOrders()
+    fun retrieveOrders(): Collection<OrderRetrieveResponse> = orderService.retrieveOrders().map { it.toRetrieveResponse() }
 
     @GetMapping("/{number}")
-    fun retrieveOrders(@PathVariable number: String): Order? = orderService.retrieveOrder(number)
+    fun retrieveOrders(@PathVariable number: String): OrderRetrieveResponse? = orderService.retrieveOrder(number)?.toRetrieveResponse()
 
     @GetMapping("/period/startAt/{startAt}/endAt/{endAt}")
     fun retrieveOrders(
         @PathVariable startAt: LocalDateTime,
         @PathVariable endAt: LocalDateTime,
-   ): Collection<Order> = orderService.retrieveOrders()
+   ): Collection<OrderRetrieveResponse> = orderService.retrieveOrders(startAt, endAt).map { it.toRetrieveResponse() }
+
+    @PutMapping("/{number}/status/{status}")
+    fun updateOrder(@PathVariable number: String, @PathVariable status: OrderStatus): OrderRetrieveResponse =
+        orderService.updateOrderStatus(number, status).toRetrieveResponse()
+
 }
