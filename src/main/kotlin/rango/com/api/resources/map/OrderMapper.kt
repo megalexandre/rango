@@ -1,11 +1,13 @@
 package rango.com.api.resources.map
 
 import rango.com.api.domain.entity.Order
+import rango.com.api.domain.entity.OrderItem
+import rango.com.api.resources.model.OrderItemModel
 import rango.com.api.resources.model.OrderModel
 
 fun OrderModel.toEntity() = Order(
     number = number,
-    products = products.map { it.toEntity() } ,
+    items = items.map { it.toEntity() },
     customer = customer.toEntity(),
     createdAt = createdAt,
     status = status,
@@ -13,8 +15,18 @@ fun OrderModel.toEntity() = Order(
 
 fun Order.toModel() = OrderModel(
     number = number,
-    products = products.map { it.toModel() } ,
+    items = items.map { it.toModel() } ,
     customer = customer.toModel(),
     createdAt = createdAt,
     status = status,
+)
+
+fun OrderItemModel.toEntity() = OrderItem(
+    product = product,
+    quantity = quantity
+)
+
+fun OrderItem.toModel() = OrderItemModel(
+    product = product,
+    quantity = quantity
 )

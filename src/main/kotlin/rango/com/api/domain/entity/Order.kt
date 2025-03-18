@@ -6,15 +6,15 @@ import java.time.LocalDateTime
 
 data class Order(
     val number: String,
-    val products: Collection<Product>,
+    val items: Collection<OrderItem>,
     val customer: Customer,
     val createdAt: LocalDateTime,
     val status: OrderStatus
 ){
 
     val numberOfItems: Int
-        get() = products.size
+        get() = items.sumOf { it.quantity }
 
     val total: BigDecimal
-        get() = products.sumOf { it.price }
+        get() = items.sumOf { it.product.price.multiply(BigDecimal(it.quantity)) }
 }

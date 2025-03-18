@@ -14,7 +14,8 @@ class OrderCreateUseCase(
 
     fun execute(order: Order): Order {
 
-        val existsByNumber = productRepository.existsByNumber(order.products.map { it.number })
+        val productsNumber = order.items.map { it.product.number }
+        val existsByNumber = productRepository.existsByNumber(productsNumber)
 
         if (!existsByNumber) {
             throw InvalidUseCaseException("Product not found")

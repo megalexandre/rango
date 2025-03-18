@@ -1,27 +1,37 @@
 package rango.com.api.application.order.`in`
 
-import rango.com.api.application.products.`in`.ProductCreateRequest
 import rango.com.api.commons.Id
 import rango.com.api.commons.OrderStatus
 import rango.com.api.domain.entity.Customer
 import rango.com.api.domain.entity.Order
+import rango.com.api.domain.entity.OrderItem
 import rango.com.api.domain.entity.Product
 import java.math.BigDecimal
 import java.time.LocalDateTime
 
 class OrderCreateRequest (
-    val products: Collection<ProductRequest>,
+    val items: Collection<OrderItemRequest>,
     val customer: CustomerRequest,
 ){
 
     fun toEntity() = Order(
         number = Id.random(),
-        products = products.map { it.toEntity() },
+        items = items.map { it.toEntity() },
         customer = customer.toEntity(),
         createdAt = LocalDateTime.now(),
         status = OrderStatus.OPEN,
     )
 
+}
+
+class OrderItemRequest(
+    val product: ProductRequest,
+    val quantity: Int ){
+
+    fun toEntity(): OrderItem = OrderItem(
+        product = product.toEntity(),
+        quantity = quantity
+    )
 }
 
 class ProductRequest(

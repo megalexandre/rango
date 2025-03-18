@@ -8,7 +8,7 @@ import rango.com.api.application.order.`in`.OrderCreateRequest
 import rango.com.api.application.order.out.OrderCreateResponse
 import rango.com.api.application.order.out.OrderRetrieveResponse
 import rango.com.api.application.order.out.toCreateResponse
-import rango.com.api.application.order.out.toRetrieveResponse
+import rango.com.api.application.order.out.toOrderItemRetrieveResponse
 import rango.com.api.commons.OrderStatus
 import rango.com.api.domain.service.OrderService
 import java.net.URI
@@ -28,19 +28,19 @@ class OrderController(
     }
 
     @GetMapping
-    fun retrieveOrders(): Collection<OrderRetrieveResponse> = orderService.retrieveOrders().map { it.toRetrieveResponse() }
+    fun retrieveOrders(): Collection<OrderRetrieveResponse> = orderService.retrieveOrders().map { it.toOrderItemRetrieveResponse() }
 
     @GetMapping("/{number}")
-    fun retrieveOrders(@PathVariable number: String): OrderRetrieveResponse? = orderService.retrieveOrder(number)?.toRetrieveResponse()
+    fun retrieveOrders(@PathVariable number: String): OrderRetrieveResponse? = orderService.retrieveOrder(number)?.toOrderItemRetrieveResponse()
 
     @GetMapping("/period/startAt/{startAt}/endAt/{endAt}")
     fun retrieveOrders(
         @PathVariable startAt: LocalDateTime,
         @PathVariable endAt: LocalDateTime,
-   ): Collection<OrderRetrieveResponse> = orderService.retrieveOrders(startAt, endAt).map { it.toRetrieveResponse() }
+   ): Collection<OrderRetrieveResponse> = orderService.retrieveOrders(startAt, endAt).map { it.toOrderItemRetrieveResponse() }
 
     @PutMapping("/{number}/status/{status}")
     fun updateOrder(@PathVariable number: String, @PathVariable status: OrderStatus): OrderRetrieveResponse =
-        orderService.updateOrderStatus(number, status).toRetrieveResponse()
+        orderService.updateOrderStatus(number, status).toOrderItemRetrieveResponse()
 
 }

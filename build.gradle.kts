@@ -32,6 +32,7 @@ dependencies {
 	testImplementation("org.junit.platform:junit-platform-suite:1.9.2")
 	testImplementation("org.junit.platform:junit-platform-suite-api:1.9.2")
 
+
 	// https://mvnrepository.com/artifact/org.javamoney/moneta
 	implementation("org.javamoney:moneta:1.4.4")
 

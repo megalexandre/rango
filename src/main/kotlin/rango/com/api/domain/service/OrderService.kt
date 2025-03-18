@@ -9,7 +9,7 @@ interface OrderService {
     fun save(order: Order): Order
     fun retrieveOrders(): Collection<Order>
     fun retrieveOrders(startAt: LocalDateTime, endsAt: LocalDateTime): Collection<Order>
-    fun retrieveOrder(string: String): Order?
-    fun updateOrderStatus(string: String, status: OrderStatus): Order
+    fun retrieveOrder(number: String): Order?
+    fun updateOrderStatus(number: String, status: OrderStatus): Order
 
 }

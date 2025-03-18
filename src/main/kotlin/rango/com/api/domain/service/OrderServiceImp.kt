@@ -17,7 +17,7 @@ class OrderServiceImp(
     private val orderCreateUseCase: OrderCreateUseCase,
 ): OrderService {
 
-    override fun save(order: Order) =orderCreateUseCase.execute(order)
+    override fun save(order: Order) = orderCreateUseCase.execute(order)
 
     override fun retrieveOrders(): Collection<Order>  = orderRepository.retrieveOrders()
 
@@ -28,9 +28,9 @@ class OrderServiceImp(
 
     override fun retrieveOrder(number: String): Order? = orderRepository.retrieveOrder(number)
 
-    override fun updateOrderStatus(number: String, nextStatus: OrderStatus): Order {
+    override fun updateOrderStatus(number: String, status: OrderStatus): Order {
         val order = orderRepository.retrieveOrder(number) ?: throw DataNotFoundException("Order not found")
-        return orderStatusUpdaterUseCase.execute(OrderStatusUpdater(order = order, nextStatus = nextStatus))
+        return orderStatusUpdaterUseCase.execute(OrderStatusUpdater(order = order, nextStatus = status))
     }
 
 }

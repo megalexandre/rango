@@ -1,16 +1,18 @@
 package rango.com.api.application.order.out
 
 import org.javamoney.moneta.Money
+import rango.com.api.application.products.out.ProductRetrieveResponse
 import rango.com.api.commons.OrderStatus
+import rango.com.api.commons.functions.toMoney
 import rango.com.api.domain.entity.Customer
 import rango.com.api.domain.entity.Order
+import rango.com.api.domain.entity.OrderItem
 import rango.com.api.domain.entity.Product
 import java.time.LocalDateTime
-import javax.money.Monetary
 
 class OrderRetrieveResponse(
     val number: String,
-    val products: Collection<Product>,
+    val items: Collection<OrderItemRetrieveResponse>,
     val customer: Customer,
     val createdAt: LocalDateTime,
     val status: OrderStatus,
@@ -18,13 +20,29 @@ class OrderRetrieveResponse(
     val total: Money,
 )
 
+class OrderItemRetrieveResponse(
+    val product: ProductRetrieveResponse,
+    val quantity: Int,
+)
 
-fun Order.toRetrieveResponse() = OrderRetrieveResponse(
+fun OrderItem.toOrderItemRetrieveResponse() = OrderItemRetrieveResponse(
+    product = this.product.toProductRetrieveResponse(),
+    quantity = this.quantity
+)
+
+fun Product.toProductRetrieveResponse() = ProductRetrieveResponse(
     number = this.number,
-    products = this.products,
+    name = this.name,
+    description = this.description,
+    price = this.price.toMoney()
+)
+
+fun Order.toOrderItemRetrieveResponse() = OrderRetrieveResponse(
+    number = this.number,
+    items = this.items.map { it.toOrderItemRetrieveResponse() },
     customer = this.customer,
     createdAt = this.createdAt,
     status = this.status,
     numberOfItems = this.numberOfItems,
-    total = Money.of(this.total, Monetary.getCurrency("BRL") )
+    total = this.total.toMoney()
 )
