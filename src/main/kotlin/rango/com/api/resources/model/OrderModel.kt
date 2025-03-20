@@ -3,7 +3,6 @@ package rango.com.api.resources.model
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import rango.com.api.commons.OrderStatus
-import rango.com.api.domain.entity.Product
 import java.time.LocalDateTime
 
 @Document(collection = "order")
@@ -19,7 +18,7 @@ data class OrderModel(
 )
 
 data class OrderItemModel(
-    val product: Product,
+    val product: ProductModel,
     val quantity: Int
 )
 

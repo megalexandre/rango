@@ -8,13 +8,15 @@ import rango.com.api.domain.repository.OrderRepository
 import rango.com.api.domain.usecase.order.OrderCreateUseCase
 import rango.com.api.domain.usecase.order.OrderStatusUpdaterUseCase
 import rango.com.api.infrastructure.exception.DataNotFoundException
+import rango.com.api.infrastructure.observability.MetricType
+import rango.com.api.infrastructure.observability.MetricsService
 import java.time.LocalDateTime
 
 @Service
 class OrderServiceImp(
     private val orderRepository: OrderRepository,
     private val orderStatusUpdaterUseCase: OrderStatusUpdaterUseCase,
-    private val orderCreateUseCase: OrderCreateUseCase,
+    private val orderCreateUseCase: OrderCreateUseCase
 ): OrderService {
 
     override fun save(order: Order) = orderCreateUseCase.execute(order)

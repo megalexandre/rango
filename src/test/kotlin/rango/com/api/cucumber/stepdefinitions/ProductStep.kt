@@ -7,8 +7,8 @@ import io.cucumber.java.en.And
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.ResultActions
@@ -67,8 +67,8 @@ class ProductStep(
                     val expectedValue = expectedNode.get(field)
                     val actualValue = response.get(field)
 
-                    Assertions.assertNotNull(actualValue, "Key not found: $field")
-                    Assertions.assertEquals(
+                    assertNotNull(actualValue, "Key not found: $field")
+                    assertEquals(
                         expectedValue.asText(),
                         actualValue.asText(),
                         "Value mismatch for key: $field"
@@ -98,7 +98,7 @@ class ProductStep(
             .fieldNames()
             .forEachRemaining { field ->
                 val actualValue = response.get(field)
-                Assertions.assertNotNull(actualValue, "Key not found: $field")
+                assertNotNull(actualValue, "Key not found: $field")
             }
     }
 

@@ -22,11 +22,11 @@ fun Order.toModel() = OrderModel(
 )
 
 fun OrderItemModel.toEntity() = OrderItem(
-    product = product,
+    product = product.toEntity(),
     quantity = quantity
 )
 
 fun OrderItem.toModel() = OrderItemModel(
-    product = product,
+    product = product.toModel(),
     quantity = quantity
 )

@@ -7,6 +7,5 @@ enum class OrderStatus(val value: Int) {
     SHIPPED(3),
     DELIVERED(4),
     CLOSED(6),
-
     CANCELLED(99),
 }

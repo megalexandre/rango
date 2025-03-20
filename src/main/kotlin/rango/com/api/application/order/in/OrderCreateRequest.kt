@@ -1,5 +1,7 @@
 package rango.com.api.application.order.`in`
 
+import jakarta.validation.constraints.NotEmpty
+import org.jetbrains.annotations.NotNull
 import rango.com.api.commons.Id
 import rango.com.api.commons.OrderStatus
 import rango.com.api.domain.entity.Customer
@@ -10,7 +12,9 @@ import java.math.BigDecimal
 import java.time.LocalDateTime
 
 class OrderCreateRequest (
+    @NotEmpty
     val items: Collection<OrderItemRequest>,
+    @NotNull
     val customer: CustomerRequest,
 ){
 

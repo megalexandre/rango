@@ -1,5 +1,6 @@
 package rango.com.api.application.order
 
+import jakarta.validation.Valid
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
@@ -22,7 +23,7 @@ class OrderController(
     private val log: Logger = LoggerFactory.getLogger(this::class.java)
 
     @PostMapping
-    fun createOrder(@RequestBody request: OrderCreateRequest): ResponseEntity<OrderCreateResponse> {
+    fun createOrder(@Valid @RequestBody request: OrderCreateRequest): ResponseEntity<OrderCreateResponse> {
         val response = orderService.save(request.toEntity()).toCreateResponse()
         return ResponseEntity.created(URI.create("/orders")).body(response)
     }
